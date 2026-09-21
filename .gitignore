@@ -1,0 +1,25 @@
+# Rider / JetBrains IDE
+.idea/
+
+# VS
+.vs/
+*.sln
+*.suo
+*.user
+
+# UE生成缓存，绝对不要提交
+Intermediate/
+Saved/
+DerivedDataCache/
+Library/
+Binaries/
+*.log
+**/*_BuiltData.uasset
+
+
+#系统垃圾文件
+.DS_Store
+Thumbs.db
+
+#shelf
+/shelf/
