@@ -1,335 +1,395 @@
 # 🎯 PyramidKillTrial
 
-> A UE5 C++ first-person time-limited shooting challenge developed independently.
+> 基于 Unreal Engine 5 + C++ 独立开发的第一人称限时射击挑战 Demo
 
-![PyramidKillTrial Gameplay](docs/images/gameplay.png)
+![PyramidKillTrial](docs/images/main_menu.png)
 
-**PyramidKillTrial** is a first-person shooting challenge built with **Unreal Engine 5 + C++**.
+## 📌 项目简介
 
-The player has **90 seconds** to defeat as many randomly spawning enemies as possible.  
-The final score is determined by the number of kills, with ratings ranging from **S to D**.
+**PyramidKillTrial** 是一个基于 **UE5 + C++**
+独立开发的第一人称限时射击游戏 Demo。
 
-If the player dies before the timer expires, the challenge ends immediately with a **Mission Failed** result.
+玩家需要在 **90 秒**内击败尽可能多的敌人，根据最终击杀数量获得 **S / A /
+B / C / D** 五档评级。
 
----
+如果玩家在挑战过程中死亡，则立即结束本局并进入 **Mission Failed** 结算。
 
-## 🎮 Gameplay
+项目主要用于实践 UE5 C++
+游戏客户端开发，包括角色、武器、战斗、GAS、AI、UI、动画以及游戏流程等系统。
 
-The core gameplay loop is simple:
+------------------------------------------------------------------------
 
-```text
-Start Challenge
-      ↓
-90-Second Countdown
-      ↓
-Random Enemy Spawning
-      ↓
-Shoot & Defeat Enemies
-      ↓
-Track Kill Count
-      ↓
-Timer Ends / Player Dies
-      ↓
-Final Result & Rating
+## 🎮 核心玩法
+
+``` text
+进入游戏
+   ↓
+查看操作说明
+   ↓
+开始 90 秒挑战
+   ↓
+敌人持续生成
+   ↓
+移动 / 瞄准 / 射击 / 换弹
+   ↓
+击杀尽可能多的敌人
+   ↓
+计时结束
+   ↓
+根据击杀数计算评级
 ```
 
-### Core Features
+### 主要功能
 
-- ⏱️ 90-second time-limited shooting challenge
-- 👾 Randomly spawning enemies
-- 🔫 First-person weapon system
-- 🎯 ADS / aiming system
-- 🔄 Reload system
-- 🔀 Semi-auto / full-auto fire mode switching
-- 🤖 Enemy patrol, detection, chase and attack
-- ❤️ Player and enemy health system
-- 📊 Real-time kill count and countdown
-- 🏆 S / A / B / C / D performance rating
-- 💀 Mission Failed state when the player dies
-- 🔊 Dynamic combat and weapon audio
-- ✨ Niagara-based combat effects
-- 🎨 Complete start, tutorial and result UI
+-   ⏱️ 90 秒限时挑战
+-   🔫 第一人称武器系统
+-   🎯 瞄准 / ADS
+-   🔄 换弹系统
+-   🔀 半自动 / 全自动射击模式切换
+-   🤖 敌人巡逻、感知、追击与攻击
+-   ❤️ 玩家与敌人生命值系统
+-   👾 敌人动态生成
+-   📊 实时击杀数与倒计时
+-   🏆 S / A / B / C / D 五档评级
+-   💀 玩家死亡触发 Mission Failed
+-   ✨ Niagara 战斗特效
+-   🔊 MetaSound 战斗音效
+-   🖥️ 开始界面、教程界面、战斗 HUD、结算界面
 
----
+------------------------------------------------------------------------
 
-## 📸 Screenshots
+# 📸 游戏截图
 
-### Main Menu
+## 主菜单
 
-![Main Menu](docs/images/main_menu.png)
+![主菜单](docs/images/main_menu.png)
 
-### Tutorial
+玩家可以从主菜单开始挑战或退出游戏。
 
-![Tutorial](docs/images/tutorial.png)
+## 操作说明
 
-### Combat
+![操作说明](docs/images/tutorial.png)
 
-![Combat](docs/images/combat.png)
+进入挑战前展示移动、跳跃、冲刺、开火、瞄准等基本操作。
 
-### Combat — Multiple Enemies
+## 战斗场景
 
-![Multiple Enemies](docs/images/combat_multiple.png)
+![战斗场景](docs/images/combat.png)
 
-### Mission Complete
+第一人称战斗视角，包括武器、准星、生命值、弹药以及倒计时等 HUD 信息。
 
-![Mission Complete](docs/images/mission_complete.png)
+## 多敌人战斗
 
----
+![多敌人战斗](docs/images/combat_multiple.png)
 
-## 🕹️ Controls
+挑战过程中会持续生成敌人，玩家需要在有限时间内尽可能提高击杀数量。
 
-| Input | Action |
-|---|---|
-| `W A S D` | Move |
-| `Space` | Jump |
-| `Left Shift` | Sprint |
-| `Left Mouse Button` | Fire |
-| `Right Mouse Button` | Aim / ADS |
-| `R` | Reload |
-| `B` | Switch Fire Mode |
+## 最终结算
 
-### Fire Modes
+![最终结算](docs/images/mission_complete.png)
 
-Press `B` to switch between:
+计时结束后显示最终击杀数和评级，并提供重新开始或返回菜单的选项。
 
-```text
-Full Auto
-    ↕
-Semi Auto
+------------------------------------------------------------------------
+
+# 🕹️ 操作方式
+
+  按键           功能
+  -------------- ---------------------
+  `W A S D`      移动
+  `Space`        跳跃
+  `Left Shift`   冲刺
+  `鼠标左键`     开火
+  `鼠标右键`     瞄准 / ADS
+  `R`            换弹
+  `B`            切换半自动 / 全自动
+
+------------------------------------------------------------------------
+
+# ⚙️ 技术实现
+
+## 1. C++ + Blueprint 混合架构
+
+项目采用 **C++ + Blueprint** 混合开发方式。
+
+C++ 主要负责：
+
+-   角色核心逻辑
+-   武器系统
+-   开火与换弹
+-   射击检测
+-   GAS 属性与伤害
+-   AI 攻击判定
+-   游戏流程核心逻辑
+
+Blueprint 主要用于：
+
+-   Gameplay 流程编排
+-   AI Behavior Tree 配置
+-   UI 与表现逻辑
+-   动画蓝图
+-   部分资源与场景配置
+
+通过这种方式将核心 Gameplay 逻辑与表现层进行一定程度的分离。
+
+------------------------------------------------------------------------
+
+## 2. 两阶段射线检测
+
+武器开火并不是简单地从摄像机直接进行一次射线检测，而是采用：
+
+``` text
+第一阶段：Camera Trace
+        ↓
+获取准星对应的 AimPoint
+        ↓
+第二阶段：Weapon Trace
+        ↓
+从枪口向 AimPoint 发射射线
+        ↓
+获取最终命中目标
 ```
 
----
+第一阶段负责确定玩家实际瞄准的位置。
 
-# 🧩 Technical Highlights
+第二阶段从武器枪口向 AimPoint
+进行检测，用于模拟第一人称武器实际的子弹路径，同时处理摄像机与枪口之间的位置偏移。
 
-## 1. Two-Stage Weapon Trace
+------------------------------------------------------------------------
 
-Instead of directly firing a trace from the camera, the weapon system uses a two-stage trace.
+## 3. Gameplay Ability System
 
-```text
-Camera
-   │
-   │ Camera Trace
-   ▼
-Aim Point
-   │
-   │ Direction
-   ▼
-Weapon Muzzle
-   │
-   │ Weapon Trace
-   ▼
-Hit Actor
+项目使用 **Gameplay Ability System（GAS）**构建属性与伤害体系。
+
+核心流程：
+
+``` text
+武器开火
+   ↓
+射线命中
+   ↓
+获取目标 Actor
+   ↓
+获取目标 ASC
+   ↓
+创建 / 应用 GameplayEffect
+   ↓
+修改 AttributeSet
+   ↓
+生命值变化
+   ↓
+死亡判定
 ```
 
-The first trace determines the point the player is aiming at.
+其中：
 
-The second trace starts from the weapon muzzle and travels toward the calculated aim point, providing a more natural first-person shooting trajectory while accounting for the offset between the camera and the weapon.
+-   `AbilitySystemComponent` 负责 GAS 核心能力
+-   `AttributeSet` 管理角色属性
+-   `GameplayEffect` 用于处理伤害等属性修改
+-   Gameplay Attribute 变化通过委托同步到 UI
 
----
+玩家 ASC 挂载在 `PlayerState`，敌人 ASC 挂载在敌人 Character 上。
 
-## 2. Gameplay Ability System
+------------------------------------------------------------------------
 
-The project uses **Gameplay Ability System (GAS)** to handle character attributes and combat damage.
+## 4. 敌人 AI
 
-```text
-Weapon
-   │
-   ▼
-Hit Detection
-   │
-   ▼
-Target ASC
-   │
-   ▼
-GameplayEffect
-   │
-   ▼
-AttributeSet
-   │
-   ▼
-Health
-   │
-   ▼
-Death
+敌人 AI 使用：
+
+-   Behavior Tree
+-   Blackboard
+-   Pawn Sensing
+
+实现基本行为：
+
+``` text
+巡逻
+ ↓
+感知玩家
+ ↓
+追击
+ ↓
+攻击
+ ↓
+玩家离开感知范围
+ ↓
+返回巡逻
 ```
 
-GAS provides a structured way to separate combat events, gameplay effects and character attributes.
+项目中设计了不同敌人类型，并为其配置不同的攻击行为。
 
----
+近战攻击通过：
 
-## 3. Enemy AI
-
-Enemy behavior is implemented using:
-
-- Behavior Tree
-- Blackboard
-- Pawn Sensing
-
-The basic AI flow is:
-
-```text
-Patrol
-  │
-  ▼
-Enemy Detection
-  │
-  ▼
-Chase
-  │
-  ▼
-Attack
-  │
-  ├── Player Lost → Patrol
-  │
-  └── Player Dead → Stop
-```
-
-Different enemy types use different attack behaviors.
-
-Attack animations are synchronized with gameplay logic through:
-
-```text
+``` text
 AnimMontage
      ↓
 AnimNotify
      ↓
-C++ Attack Detection
+C++ 球形检测
      ↓
-Damage
+命中目标
+     ↓
+造成伤害
 ```
 
----
+实现动画与攻击判定之间的同步。
 
-## 4. Gameplay Flow Managed by GameMode
+------------------------------------------------------------------------
 
-The gameplay session is centrally controlled by `GameMode`.
+## 5. GameMode 游戏流程管理
 
-```text
+游戏核心流程由 `GameMode` 统一管理：
+
+``` text
 GameMode
-├── Countdown Timer
-├── Enemy Spawning
-├── Spawn Point Management
-├── Enemy Count
-├── Kill Count
-├── Rating Calculation
-└── Mission Result
+├── 挑战计时
+├── 敌人生成
+├── SpawnPoint 管理
+├── 场上敌人数控制
+├── 击杀统计
+├── 评级计算
+└── 游戏结束
 ```
 
-Enemies are spawned dynamically through timers and a collection of predefined spawn points.
+挑战过程中通过 Timer 动态生成敌人，并使用预先放置的 SpawnPoint
+作为敌人出生位置。
 
-The active enemy count is also controlled to prevent unlimited spawning.
+同时限制场上敌人数量，避免敌人无限生成造成不必要的性能压力。
 
----
+------------------------------------------------------------------------
 
-## 5. Event-Driven HUD
+## 6. HUD / Widget / WidgetController
 
-The HUD uses a separated data flow instead of relying on constant UI polling.
+项目采用类似：
 
-```text
+``` text
 Gameplay Data
-      │
-      ├── GAS Attributes
-      │
-      └── Weapon Ammo
-             │
-             ▼
-     Widget Controller
-             │
-             ▼
-          HUD Widget
+     ↓
+Widget Controller
+     ↓
+HUD Widget
 ```
 
-The system is used for:
+的数据流结构。
 
-- Player Health
-- Current Ammo
-- Reserve Ammo
-- Kill Count
-- Remaining Time
-- Crosshair
-- Low Ammo Warning
-- Reload Prompt
-- Mission Result
+其中：
 
-The countdown also changes its visual presentation when the remaining time becomes low.
+### GAS
 
----
+负责：
 
-# 🏗️ Architecture
+-   Health
+-   MaxHealth
+-   属性变化
 
-The project follows a **C++ + Blueprint hybrid architecture**.
+### Weapon
 
-```mermaid
-graph TD
+负责：
 
-    Input[Enhanced Input]
+-   CurrentAmmo
+-   MagazineCapacity
+-   ReserveAmmo
+-   Reload State
 
-    Input --> Character[Player Character]
+### Widget Controller
 
-    Character --> Weapon[Weapon System]
-    Character --> GAS[Gameplay Ability System]
-    Character --> Camera[Camera / ADS]
+负责将 Gameplay 数据传递给 UI。
 
-    Weapon --> Trace[Two-Stage Trace]
-    Trace --> Target[Target Actor]
+### HUD
 
-    Target --> ASC[Ability System Component]
-    ASC --> GE[Gameplay Effect]
-    GE --> Attributes[AttributeSet]
-    Attributes --> Health[Health]
+负责最终表现：
 
-    GameMode[GameMode] --> Timer[Challenge Timer]
-    GameMode --> Spawn[Enemy Spawning]
-    GameMode --> Kill[Kill Statistics]
-    GameMode --> Rating[Rating System]
+-   生命值
+-   当前弹药
+-   备用弹药
+-   准星
+-   ADS 状态
+-   Low Ammo 提示
+-   换弹提示
+-   剩余时间
+-   击杀数量
+-   最终评级
 
-    AI[Enemy AI] --> BT[Behavior Tree]
-    AI --> BB[Blackboard]
-    AI --> Sensing[Pawn Sensing]
+UI 主要通过事件 / 委托驱动更新，而不是依赖 Tick 持续查询。
 
-    GAS --> WidgetController[Widget Controller]
-    Weapon --> WidgetController
+------------------------------------------------------------------------
 
-    WidgetController --> HUD[HUD Widget]
+# 🧠 技术架构
+
+``` text
+                   Enhanced Input
+                         │
+                         ▼
+                ┌─────────────────┐
+                │ Player Character│
+                └────────┬────────┘
+                         │
+             ┌───────────┼───────────┐
+             ▼           ▼           ▼
+          Weapon        GAS        Camera
+             │           │           │
+             ▼           ▼           ▼
+       Weapon Trace  AttributeSet   ADS
+             │           │
+             └─────┬─────┘
+                   ▼
+              Combat Result
+                   │
+                   ▼
+              WidgetController
+                   │
+                   ▼
+                  HUD
+
+
+GameMode
+   │
+   ├── Timer
+   ├── Enemy Spawn
+   ├── Kill Count
+   └── Rating
+
+
+Enemy
+   │
+   ├── Behavior Tree
+   ├── Blackboard
+   ├── Pawn Sensing
+   └── AnimMontage / AnimNotify
 ```
 
----
+------------------------------------------------------------------------
 
-# 🛠️ Technology Stack
+# 🛠️ 技术栈
 
-| Category | Technology |
-|---|---|
-| Engine | Unreal Engine 5 |
-| Programming | C++ |
-| Visual Scripting | Blueprint |
-| Gameplay Framework | Unreal Gameplay Framework |
-| Ability / Attribute | Gameplay Ability System (GAS) |
-| Input | Enhanced Input |
-| AI | Behavior Tree / Blackboard / Pawn Sensing |
-| Animation | Animation Montage / AnimNotify |
-| VFX | Niagara |
-| Audio | MetaSound |
-| Version Control | Git |
-| Large Asset Management | Git LFS |
+  分类              技术
+  ----------------- -------------------------------------------
+  游戏引擎          Unreal Engine 5
+  编程语言          C++
+  可视化脚本        Blueprint
+  属性 / 伤害系统   Gameplay Ability System
+  输入              Enhanced Input
+  AI                Behavior Tree / Blackboard / Pawn Sensing
+  动画              Animation Montage / AnimNotify
+  特效              Niagara
+  音频              MetaSound
+  版本管理          Git
+  UE 大型资源管理   Git LFS
 
----
+------------------------------------------------------------------------
 
-# 📁 Project Structure
+# 📁 项目结构
 
-```text
-PyramidKillTrial/
-│
+``` text
+FPS/
 ├── Config/
-│
 ├── Content/
 │   ├── Animation/
-│   ├── Audio/
 │   ├── Characters/
 │   ├── Effects/
-│   ├── Maps/
 │   ├── UI/
-│   └── Weapons/
+│   ├── Weapons/
+│   └── ...
 │
 ├── Plugins/
 │   └── UEFormat/
@@ -343,102 +403,57 @@ PyramidKillTrial/
 │       ├── AI/
 │       └── ...
 │
+├── docs/
+│   └── images/
+│       ├── main_menu.png
+│       ├── tutorial.png
+│       ├── combat.png
+│       ├── combat_multiple.png
+│       └── mission_complete.png
+│
 ├── .gitattributes
 ├── .gitignore
 └── FPS.uproject
 ```
 
----
+------------------------------------------------------------------------
 
-# 🎮 Game Flow
+# 📋 项目信息
 
-### Main Menu
+  项目       内容
+  ---------- ------------------
+  项目名称   PyramidKillTrial
+  开发时间   2026.08 - 至今
+  开发者     Yw332
+  开发方式   个人独立开发
+  游戏引擎   Unreal Engine 5
+  编程语言   C++
+  游戏类型   第一人称限时射击
 
-The player can start the challenge or exit the game.
+------------------------------------------------------------------------
 
-### Tutorial
+# 🎯 项目目标
 
-The tutorial introduces:
+本项目主要用于实践 **UE5 C++ 游戏客户端开发**，重点学习和实现：
 
-- Movement
-- Sprint
-- Jump
-- Fire
-- Aim
-- Challenge objective
+-   UE5 Gameplay Framework
+-   C++ 与 Blueprint 混合开发
+-   武器与战斗系统
+-   Gameplay Ability System
+-   Enemy AI
+-   动画与 Gameplay 事件同步
+-   HUD / Widget / WidgetController
+-   Git / Git LFS 项目管理
 
-### Challenge
-
-The player enters the pyramid arena and starts a 90-second combat challenge.
-
-Enemies spawn dynamically during the challenge.
-
-### Mission Complete
-
-When the timer reaches zero, the final kill count is calculated and converted into a performance rating.
-
-Example:
-
-```text
-Final Kills: 23
-
-Final Score: A
-```
-
-### Mission Failed
-
-If the player dies during the challenge:
-
-```text
-Mission Failed
-```
-
-The challenge ends immediately without a score.
-
----
-
-# 📊 Development Information
-
-| Item | Information |
-|---|---|
-| Project | PyramidKillTrial |
-| Development Time | 2026.08 - Present |
-| Developer | Yw332 |
-| Engine | Unreal Engine 5 |
-| Language | C++ |
-| Development | Solo |
-| Genre | First-Person Time-Limited Shooter |
-
----
-
-# 🚀 Project Goals
-
-This project focuses on practicing **UE5 C++ gameplay programming and game client architecture**.
-
-The main goals include:
-
-- Building gameplay systems with C++
-- Practicing Unreal Gameplay Framework
-- Applying GAS to combat and attributes
-- Implementing a reusable weapon system
-- Building enemy AI with Behavior Trees
-- Designing event-driven UI communication
-- Integrating Blueprint and C++ effectively
-- Using Git and Git LFS for Unreal Engine project management
-
----
+------------------------------------------------------------------------
 
 # 👨‍💻 Developer
 
 **Yw332**
 
-UE5 / C++ Game Client Development
+方向：**UE5 / C++ 游戏客户端开发**
 
-Interested in:
+关注：
 
-- Gameplay Programming
-- Unreal Engine
-- C++
-- Gameplay Systems
-- Game AI
-- Combat Systems
+`Gameplay Programming` · `Unreal Engine` · `C++` · `Combat System` ·
+`Game AI`
